@@ -1,6 +1,6 @@
 language: groovy
 jdk:
-  - openjdk7
+#  - openjdk7
   - oraclejdk8
 
 addons:
@@ -13,17 +13,13 @@ before_script:
   - psql -c "grant all privileges on database pg_extensions_test to pg_extensions;" -U postgres
 
 script:
-  - ./grailsw refresh-dependencies --non-interactive
-  - ./grailsw test-app -coverage -xml
+  - ./gradlew clean build
 
-notifications:
-  email:
-    recipients:
-      - lopez.ivan@gmail.com
-      - alonso.javier.torres@gmail.com
+#notifications:
+#  email:
+#    recipients:
+#      - lopez.ivan@gmail.com
+#      - alonso.javier.torres@gmail.com
 
-    on_success: change
-    on_failure: change
-
-after_success:
-  - ./grailsw coveralls
+#    on_success: change
+#    on_failure: change
