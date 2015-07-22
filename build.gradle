@@ -44,9 +44,18 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 cobertura {
-	coverageExcludes = ['.*BootStrap.*','.*test.*']
+	coverageExcludes = ['.*BootStrap.*', '.*test.*']
 
 	coverageFormats = ['html', 'xml']
+}
+
+jar {
+	exclude 'test/**'
+
+	doFirst {
+		File pd = new File(buildDir, 'classes/main/META-INF/grails-plugin.xml')
+		pd.text = pd.text.readLines().findAll { ! it.contains('<resource>test.') }.join('\n')
+	}
 }
 
 repositories {
