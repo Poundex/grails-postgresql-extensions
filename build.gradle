@@ -5,9 +5,13 @@ buildscript {
     repositories {
         mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
+        mavenCentral()
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+
+        classpath 'net.saliman:gradle-cobertura-plugin:2.2.7'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0'
     }
 }
 
@@ -27,6 +31,10 @@ apply plugin: "org.grails.grails-plugin"
 apply from:'https://raw.githubusercontent.com/grails/grails-profile-repository/master/profiles/plugin/templates/grailsCentralPublishing.gradle'
 apply from:'https://raw.githubusercontent.com/grails/grails-profile-repository/master/profiles/plugin/templates/bintrayPublishing.gradle'
 
+apply plugin: 'cobertura'
+apply plugin: 'com.github.kt3k.coveralls'
+
+
 ext {
     grailsVersion = project.grailsVersion
     gradleWrapperVersion = project.gradleWrapperVersion
@@ -34,6 +42,12 @@ ext {
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
+
+cobertura {
+	coverageExcludes = ['.*BootStrap.*','.*test.*']
+
+	coverageFormats = ['html', 'xml']
+}
 
 repositories {
     mavenLocal()
@@ -76,3 +90,6 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
+
+
+
